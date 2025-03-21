@@ -7,8 +7,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 
 router.get('/find', () => {
-    
-    
     console.log("dfgdfg")
 })
 

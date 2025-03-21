@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
 const connectDB = require("./config/db");
-
+const taskRoutes = require('./routes/taskRoutes');
 app.use(express.json());
 
 app.get('/', ()=>{
@@ -10,6 +10,7 @@ app.get('/', ()=>{
 });
 
 app.use('/auth', authRoutes);
+app.use('/task', taskRoutes);
 
 connectDB();
 app.listen(3000,()=>{
