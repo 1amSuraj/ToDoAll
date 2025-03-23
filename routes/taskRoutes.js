@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/Task.js');
 const authMiddleware = require('../middleware/authMiddleware.js');
-
 //add tasks with description
 router.post("/", authMiddleware, async (req, res) => {
     try {
@@ -24,7 +23,6 @@ router.get("/",authMiddleware, async(req,res)=>{
         res.status(500).json({message:"Server error"});
     }
 });
-
 //update
 router.get('/:id',authMiddleware, async(req,res)=>{
   try{
