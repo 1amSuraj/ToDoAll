@@ -29,6 +29,8 @@ router.post("/register", async (req, res) => {
       res.status(500).json({ message: "Server error", error: error.message });
     }
 });
+
+
 router.post("/login",async(req,res)=>{
   try{
     const {email,password} = req.body;
@@ -41,7 +43,7 @@ router.post("/login",async(req,res)=>{
       return res.status(400).json({message:"Invalid email or password"});
     }
     const token = jwt.sign({userId:user._id},"hello",{expiresIn:"1h"});
-    res.status(200).json({message:"Login successful",token});
+    res.status(200).json({message:"Login successful",token, user});
   }
   catch(error){
     res.status(500).json({message:"Server error",error:error.message});
@@ -51,7 +53,7 @@ router.post("/login",async(req,res)=>{
 
 
 
-router.get("/profile", authMiddleware, async (req, res) => {
+router.get("/me", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password");
     res.json(user);
