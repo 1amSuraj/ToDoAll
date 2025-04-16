@@ -4,17 +4,23 @@ import { addTask } from "@/libs/api";
 
 export default function TaskForm({ onTaskAdded }: { onTaskAdded: () => void }) {
   const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!title.trim()) {
+      setError("No Empty tasks!"); 
+      return;
+    }
     await addTask(title);
     setTitle("");
-    onTaskAdded(); // Refresh task list after adding
+    onTaskAdded(); 
+    setError("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+    
+    <><form onSubmit={handleSubmit} className="flex gap-2 mb-4">
       <input
         type="text"
         className="border p-2 flex-grow"
@@ -26,6 +32,11 @@ export default function TaskForm({ onTaskAdded }: { onTaskAdded: () => void }) {
       <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
         Add Task
       </button>
+      
     </form>
+    {
+        error && (<p className="text-red-500 mb-4 -mt-2">{error}</p>)
+      }
+    </>
   );
 }

@@ -4,9 +4,11 @@ const API_URL = `${process.env.NEXT_PUBLIC_BC_URL}/api/tasks`;
 
 export const fetchTasks = async () => {
   const token = localStorage.getItem("token");
+
   const res = await axios.get(API_URL, {
     headers: { Authorization: `${token}` },
   });
+
   return res.data;
 };
 
@@ -15,6 +17,16 @@ export const addTask = async (title: string) => {
   const res = await axios.post(
     API_URL,
     { title },
+    { headers: { Authorization: `${token}` } }
+  );
+  return res.data;
+};
+
+export const updateTask = async (taskId: string, updatedTitle: string) => {
+  const token = localStorage.getItem("token");
+  const res = await axios.put(
+    `${API_URL}/edit/${taskId}`,
+    { title: updatedTitle },
     { headers: { Authorization: `${token}` } }
   );
   return res.data;
